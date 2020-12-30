@@ -2,6 +2,8 @@ import psutil
 import flask
 import json
 
+
+# Process Disk Stats for given mount points
 def diskstats(disks):
 	diskret = []
 	for disk in disks:
