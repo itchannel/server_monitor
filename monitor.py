@@ -24,7 +24,9 @@ def diskstats(disks):
 
 # Get CPU Status
 def cpustats():
-    print("Coming Soon")
+    cpu_percent = psutil.cpu_percent(interval=1)
+    data = {"cpu_usage_percent": cpu_percent}
+    return data
 
 
 app = Flask(__name__)
@@ -34,10 +36,11 @@ app.config["DEBUG"] = True
 @app.route('/stats', methods=["GET"])
 def stats():
     disks = diskstats(config["disks"])
+    cpu = cpustats()
     pc_powered = None
     if os.name == "nt":
         pc_powered = True
-    data = {"disks": disks, "pc_powered": pc_powered}
+    data = {"disks": disks, "cpu": cpu, "pc_powered": pc_powered}
     return json.dumps(data)
 
 
