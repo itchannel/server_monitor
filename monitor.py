@@ -47,8 +47,10 @@ def suspend():
         if os.name == "nt":
             return {"pc_powered": True}
     else:
-        print(request.__dict__)
-        # os.system("rundll32.exe powrprof.dll,SetSuspendState 0,1,0")
+        data = request.get_json()
+        print(data)
+        if data["active"] == "false":
+            os.system("rundll32.exe powrprof.dll,SetSuspendState 0,1,0")
 
 
 with open('monitor.conf', 'r') as f:
