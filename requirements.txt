@@ -1,0 +1,6 @@
+psutil==5.8.0
+flake8==3.8.4
+flake8-polyfill==1.0.2
+pylint==2.6.0
+pyparsing==2.4.7
+Flask==1.1.2
