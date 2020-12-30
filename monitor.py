@@ -1,6 +1,6 @@
+import json
 import psutil
 import flask
-import json
 
 
 # Process Disk Stats for given mount points
@@ -23,6 +23,7 @@ def diskstats(disks):
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
+
 
 @app.route('/stats', methods=["GET"])
 def stats():

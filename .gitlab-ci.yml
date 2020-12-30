@@ -15,9 +15,9 @@ flake8:
   script:
   - flake8 --max-line-length=120 *.py
 
-pylint:
-  stage: Static Analysis
-  tags: ["dev"]
-  allow_failure: true
-  script:
-  - pylint *.py
+#pylint:
+#  stage: Static Analysis
+#  tags: ["dev"]
+#  allow_failure: true
+#  script:
+#  - pylint *.py
