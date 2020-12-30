@@ -7,8 +7,7 @@ flake8:
     name: python:3.7
   tags: ["dev"]
   before_script:
-  - docker info
-  script:
   - python3 --version
   - pip install -r requirements.txt
+  script:
   - flake8 --max-line-length=120 *.py
