@@ -9,6 +9,6 @@ stages:
 
 flake8:
   stage: Static Analysis
-  tags ["dev"]
+  tags: ["dev"]
   script:
   - flake8 --max-line-length=120 *.py
