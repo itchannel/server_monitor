@@ -1,6 +1,6 @@
 import json
 import psutil
-import flask
+from flask import Flask, request
 import os
 
 
@@ -27,21 +27,28 @@ def cpustats():
     print("Coming Soon")
 
 
-app = flask.Flask(__name__)
+app = Flask(__name__)
 app.config["DEBUG"] = True
 
 
 @app.route('/stats', methods=["GET"])
 def stats():
     disks = diskstats(config["disks"])
-    data = {"disks": disks}
+    pc_powered = None
+    if os.name == "nt":
+        pc_powered = True
+    data = {"disks": disks, "pc_powered": pc_powered}
     return json.dumps(data)
 
 
-@app.route('/suspend', methods=["GET"])
+@app.route('/suspend', methods=["GET", "POST"])
 def suspend():
-    if os.name == "nt":
-        os.system("rundll32.exe powrprof.dll,SetSuspendState 0,1,0")
+    if request.method == "GET":
+        if os.name == "nt":
+            return {"pc_powered": True}
+    else:
+        print(request.__dict__)
+        # os.system("rundll32.exe powrprof.dll,SetSuspendState 0,1,0")
 
 
 with open('monitor.conf', 'r') as f:
