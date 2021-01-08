@@ -14,7 +14,7 @@ def diskstats(disks):
         free = obj_Disk.free / (1024.0 ** 3), "GB"
         percent = obj_Disk.percent
         diskret.append({
-            "name": disk,
+            "name": disk["location"],
             "total": total, "used": used,
             "free": free,
             "percent": percent
