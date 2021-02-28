@@ -1,4 +1,5 @@
 import json
+import docker
 import psutil
 from flask import Flask, request
 import os
@@ -29,6 +30,22 @@ def cpustats():
     return data
 
 
+# Docker containers
+
+def dockerstats():
+    client = docker.from_env()
+
+    containers = client.containers.list()
+    data = []
+    for container in containers:
+        data.append({
+            "Name": container.attrs["Name"],
+            "Status": container.attrs["State"]["Status"],
+            "Attributes": container.attrs
+        })
+    return data
+
+
 app = Flask(__name__)
 app.config["DEBUG"] = True
 
@@ -40,7 +57,16 @@ def stats():
     pc_powered = None
     if os.name == "nt":
         pc_powered = True
-    data = {"disks": disks, "cpu": cpu, "pc_powered": pc_powered}
+    docker = ""
+    if "docker" in config:
+        if config["docker"]["enabled"] is True:
+            docker = dockerstats()
+    data = {
+        "disks": disks,
+        "cpu": cpu,
+        "pc_powered": pc_powered,
+        "docker": docker
+    }
     return json.dumps(data)
 
 
